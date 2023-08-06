@@ -192,6 +192,7 @@ def getUi():
     run_tool_buttom.on_click(run_tool_click)
     # stop_train_buttom.on_click(stop_train_click)
     stop_sd_buttom.on_click(stop_sd_click)
+    stop_tool_buttom.on_click(stop_tool_click)
     run_all_is_ok_buttom.on_click(check_all_is_running_click)
     run_all_buttom.on_click(run_all_click)
     run_pre_buttom.on_click(run_pre_click)
