@@ -35,53 +35,28 @@ def check_disk_space(source_path, target_path):
     # return True if there is enough space, False otherwise
     return source_size <= target_free_space
 
-def move_controlnet(controlnet, target):
-    if not os.path.exists(controlnet):
-        print(f"controlnet地址错误")
+def move_folder(src_folder, target_parent, description):
+    # 检查源文件夹是否存在
+    if not os.path.exists(src_folder):
+        print(f"{description}地址错误")
         return
-    # check if there is enough disk space
-    if not check_disk_space(controlnet, target):
-        print(f"controlnet移动，磁盘空间不够")
-        return
-    # move source1 to target
-    shutil.move(controlnet, target)
-    print("移动controlnet成功!")
 
-def move_sd(sd, target):
-    if not os.path.exists(sd):
-        print(f"sd地址错误")
+    # 检查是否有足够的磁盘空间
+    if not check_disk_space(src_folder, target_parent):
+        print(f"{description}移动，磁盘空间不够")
         return
-    # check if there is enough disk space
-    if not check_disk_space(sd, target):
-        print(f"sd移动，磁盘空间不够")
-        return
-    # move source1 to target
-    shutil.move(sd, target)
-    print("移动SD成功!")
 
-def move_lora(lora_train, target):
-    if not os.path.exists(lora_train):
-        print(f"lora训练地址错误")
-        return
-    # check if there is enough disk space
-    if not check_disk_space(lora_train, target):
-        print(f"lora训练移动，磁盘空间不够")
-        return
-    # move source2 to target
-    shutil.move(lora_train, target)
-    print("移动lora成功!")
+    # 构造完整的目标路径
+    target_folder = os.path.join(target_parent, os.path.basename(src_folder))
 
-def move_tools(model_tools, target):
-    if not os.path.exists(model_tools):
-        print(f"工具地址错误")
-        return
-    # check if there is enough disk space
-    if not check_disk_space(model_tools, target):
-        print(f"{model_tools}工具移动，磁盘空间不够")
-        return
-    # move source3 to target
-    shutil.move(model_tools, target)
-    print("移动工具成功!")
+    # 如果目标文件夹存在，则删除它
+    if os.path.exists(target_folder):
+        print(f"目标文件夹{target_folder}存在，正在删除...")
+        shutil.rmtree(target_folder)
+
+    # 移动源文件夹到目标路径
+    shutil.move(src_folder, target_parent)
+    print(f"移动{description}成功!")
 
 def copy_model(model, target):
     if not os.path.exists(model):
@@ -126,10 +101,9 @@ def copy_model_folder(source_folder, target_folder):
 def move_files_and_log(sd, lora_train, model_tools, target):
     try:
         print("开始移动工程。。。")
-
-        move_sd(sd, target)
-        move_lora(lora_train, target)
-        move_tools(model_tools, target)
+        move_folder(sd, target, "sd")
+        move_folder(lora_train, target, "lora训练")
+        move_folder(model_tools, target, "工具")
 
 
         print("开始复制模型。。。")
