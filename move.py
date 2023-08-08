@@ -97,6 +97,11 @@ def copy_model_folder(source_folder, target_folder):
 
     print(f"完成{source_folder}模型复制")
 
+def delete_models():
+    models_folder = "/root/autodl-tmp/models/"
+    if os.path.exists(models_folder):
+        print(f"目标文件夹{models_folder}存在，正在删除...")
+        shutil.rmtree(models_folder)
 
 def move_files_and_log(sd, lora_train, model_tools, target):
     try:
@@ -118,24 +123,44 @@ def move_files_and_log(sd, lora_train, model_tools, target):
         target2 = "/root/autodl-tmp/stable-diffusion-webui/models/torch_deepdanbooru"
         copy_model(model2, target2)
 
+                
+        controlnet_zoedepth_model_folder = "/root/autodl-tmp/models/roop/"
+        target2 = "/root/autodl-tmp/stable-diffusion-webui/models/roop/"
+        copy_model_folder(controlnet_zoedepth_model_folder, target2)
+
         model3_folder = "/root/autodl-tmp/models/clip/"
         target3 = "/root/.cache/clip/"
         copy_model_folder(model3_folder, target3)
 
         controlnet_model_folder = "/root/autodl-tmp/models/controlnet/"
-        target4 = "/root/autodl-tmp/stable-diffusion-webui/extensions/sd-webui-controlnet/models"
+        target4 = "/root/autodl-tmp/stable-diffusion-webui/extensions/sd-webui-controlnet/models/"
         copy_model_folder(controlnet_model_folder, target4)
 
         controlnet_midas_model_folder = "/root/autodl-tmp/models/midas/"
-        target5 = "/root/autodl-tmp/stable-diffusion-webui/extensions/sd-webui-controlnet/annotator/downloads/midas"
-        
+        target5 = "/root/autodl-tmp/stable-diffusion-webui/extensions/sd-webui-controlnet/annotator/downloads/midas/"
         copy_model_folder(controlnet_midas_model_folder, target5)
+
+        controlnet_zoedepth_model_folder = "/root/autodl-tmp/models/zoedepth/"
+        target7 = "/root/autodl-tmp/stable-diffusion-webui/extensions/sd-webui-controlnet/annotator/downloads/zoedepth/"
+        copy_model_folder(controlnet_zoedepth_model_folder, target7)
 
         pytorch_model_folder = "/root/autodl-tmp/models/openai/"
         target6 = "/root/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/snapshots/8d052a0f05efbaefbc9e8786ba291cfdf93e5bff/"
         
         copy_model_folder(pytorch_model_folder, target6)
+
+        ifnude_folder = "/root/autodl-tmp/models/ifnude/"
+        target8 = "/root/.ifnude/"
+        
+        copy_model_folder(ifnude_folder, target8)
+        
+        buffalo_l_folder = "/root/autodl-tmp/models/buffalo_l/"
+        target9 = "/root/.insightface/models/"
+        
+        copy_model_folder(buffalo_l_folder, target9)
+
         print("完成移动")
+        delete_models()
     except Exception as e:
         print(f"Error occurred: {str(e)}")
 
