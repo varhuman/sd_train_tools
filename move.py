@@ -97,6 +97,20 @@ def copy_model_folder(source_folder, target_folder):
 
     print(f"完成{source_folder}模型复制")
 
+def copy_all_model_folder(source_folder, target_folder):
+    if not os.path.exists(source_folder):
+        print(f"源文件夹路径错误 : {source_folder}")
+        return
+    
+    os.makedirs(os.path.dirname(target_folder), exist_ok=True)
+    if os.path.exists(target_folder):
+        print(f"目标文件夹{target_folder}存在，正在删除...")
+        shutil.rmtree(target_folder)
+    # 使用shutil.copytree递归复制整个目录结构
+    shutil.copytree(source_folder, target_folder)
+
+    print(f"完成{source_folder}模型复制")
+
 def delete_models():
     models_folder = "/root/autodl-tmp/models/"
     if os.path.exists(models_folder):
@@ -110,7 +124,6 @@ def move_files_and_log(sd, lora_train, model_tools, target):
         move_folder(lora_train, target, "lora训练")
         move_folder(model_tools, target, "工具")
 
-
         print("开始复制模型。。。")
         model1_folder = "/root/autodl-tmp/models/sd/"
         dst1 = "/root/autodl-tmp/stable-diffusion-webui/models/Stable-diffusion"
@@ -122,11 +135,14 @@ def move_files_and_log(sd, lora_train, model_tools, target):
         model2 = "/root/autodl-tmp/stable-diffusion-webui/models/deepdanbooru/model-resnet_custom_v3.h5"
         target2 = "/root/autodl-tmp/stable-diffusion-webui/models/torch_deepdanbooru"
         copy_model(model2, target2)
-
                 
         controlnet_zoedepth_model_folder = "/root/autodl-tmp/models/roop/"
         target2 = "/root/autodl-tmp/stable-diffusion-webui/models/roop/"
         copy_model_folder(controlnet_zoedepth_model_folder, target2)
+
+        codeformer_model_folder = "/root/autodl-tmp/models/codeformer/"
+        codeformer_target = "/root/autodl-tmp/stable-diffusion-webui/models/Codeformer/"
+        copy_model_folder(codeformer_model_folder, codeformer_target)
 
         model3_folder = "/root/autodl-tmp/models/clip/"
         target3 = "/root/.cache/clip/"
@@ -146,8 +162,12 @@ def move_files_and_log(sd, lora_train, model_tools, target):
 
         pytorch_model_folder = "/root/autodl-tmp/models/openai/"
         target6 = "/root/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/snapshots/8d052a0f05efbaefbc9e8786ba291cfdf93e5bff/"
-        
         copy_model_folder(pytorch_model_folder, target6)
+
+        pytorch_model_folder = "/root/autodl-tmp/models/models--bert-base-uncased/"
+        bert_base = "/root/.cache/huggingface/hub/models--bert-base-uncased/"
+        
+        copy_all_model_folder(pytorch_model_folder, bert_base)
 
         ifnude_folder = "/root/autodl-tmp/models/ifnude/"
         target8 = "/root/.ifnude/"
@@ -155,12 +175,12 @@ def move_files_and_log(sd, lora_train, model_tools, target):
         copy_model_folder(ifnude_folder, target8)
         
         buffalo_l_folder = "/root/autodl-tmp/models/buffalo_l/"
-        target9 = "/root/.insightface/models/"
+        target9 = "/root/.insightface/models/buffalo_l/"
         
         copy_model_folder(buffalo_l_folder, target9)
 
-        print("完成移动")
         delete_models()
+        print("已经全部完成!!!!")
     except Exception as e:
         print(f"Error occurred: {str(e)}")
 
