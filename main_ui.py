@@ -11,6 +11,12 @@ import utils as utils
 
 isMoving = False
 
+sd_port = 7860
+train_port = 28000
+tool_port = 7888
+
+output_port = 6006
+
 def getUi():
     out = widgets.Output(layout={'border': '1px solid black'})
     
@@ -117,19 +123,24 @@ def getUi():
             print("请稍等...")
             start_tool.start()
     
-    # def stop_train_click(self):
-    #     with out:
-    #         out.clear_output()
-    #         print("正在停止训练...")
-    #         print("请稍等...")
-    #         start_train.stop()
+    def stop_train_click(self):
+        with out:
+            out.clear_output()
+            print("正在停止训练...")
+            print("请稍等...")            
+            res = utils.stop(train_port)
+            if res:
+                print("训练停止成功")
+            else:
+                print("训练停止失败，或者是训练未在运行")
+
 
     def stop_sd_click(self):
         with out:
             out.clear_output()
             print("正在停止SD...")
             print("请稍等...")
-            res = utils.stop(7860)
+            res = utils.stop(sd_port)
             if res:
                 print("SD停止成功")
             else:
@@ -140,7 +151,7 @@ def getUi():
             out.clear_output()
             print("正在停止工具...")
             print("请稍等...")
-            res = utils.stop(7888)
+            res = utils.stop(tool_port)
             if res:
                 print("工具停止成功")
             else:
@@ -160,19 +171,19 @@ def getUi():
         with out:
             out.clear_output()
             print("正在检查是否成功运行...")
-            res = utils.is_running(28000)
+            res = utils.is_running(train_port)
             if res:
                 print("Lora训练运行成功")
             else:
                 print("Lora训练运行失败,请点击”启动lora训练“按钮尝试重启")
             
-            res = utils.is_running(7860)
+            res = utils.is_running(sd_port)
             if res:
                 print("SD运行成功")
             else:
                 print("SD运行失败,请点击”启动SD“按钮尝试重启")
 
-            res = utils.is_running(7888)
+            res = utils.is_running(tool_port)
             if res:
                 print("工具运行成功")
             else:
@@ -190,7 +201,7 @@ def getUi():
     run_sd_buttom.on_click(run_sd_click)
     # run_train_buttom.on_click(run_train_click)
     run_tool_buttom.on_click(run_tool_click)
-    # stop_train_buttom.on_click(stop_train_click)
+    stop_train_buttom.on_click(stop_train_click)
     stop_sd_buttom.on_click(stop_sd_click)
     stop_tool_buttom.on_click(stop_tool_click)
     run_all_is_ok_buttom.on_click(check_all_is_running_click)

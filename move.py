@@ -132,6 +132,11 @@ def move_files_and_log(sd, lora_train, model_tools, target):
         copy_model_folder(model1_folder, dst1)
         copy_model_folder(model1_folder, dst2)
 
+        model1_folder2 = "/root/autodl-tmp/models/lora/"
+        dst3 = "/root/autodl-tmp/stable-diffusion-webui/models/Lora"
+        # move model
+        copy_model_folder(model1_folder2, dst3)
+
         model2 = "/root/autodl-tmp/stable-diffusion-webui/models/deepdanbooru/model-resnet_custom_v3.h5"
         target2 = "/root/autodl-tmp/stable-diffusion-webui/models/torch_deepdanbooru"
         copy_model(model2, target2)
@@ -160,8 +165,8 @@ def move_files_and_log(sd, lora_train, model_tools, target):
         target7 = "/root/autodl-tmp/stable-diffusion-webui/extensions/sd-webui-controlnet/annotator/downloads/zoedepth/"
         copy_model_folder(controlnet_zoedepth_model_folder, target7)
 
-        pytorch_model_folder = "/root/autodl-tmp/models/openai/"
-        target6 = "/root/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/snapshots/8d052a0f05efbaefbc9e8786ba291cfdf93e5bff/"
+        pytorch_model_folder = "/root/autodl-tmp/models/models--openai--clip-vit-large-patch14/"
+        target6 = "/root/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/"
         copy_model_folder(pytorch_model_folder, target6)
 
         pytorch_model_folder = "/root/autodl-tmp/models/models--bert-base-uncased/"
