@@ -14,6 +14,7 @@ isMoving = False
 sd_port = 7860
 train_port = 28000
 tool_port = 7888
+gpu_tool_port = 8079
 
 output_port = 6006
 
@@ -152,10 +153,11 @@ def getUi():
             print("正在停止工具...")
             print("请稍等...")
             res = utils.stop(tool_port)
-            if res:
-                print("工具停止成功")
+            res2 = utils.stop(gpu_tool_port)
+            if res and res2:
+                print("工具、gpu工具停止成功")
             else:
-                print("工具停止失败，或者是SD未在运行")
+                print("工具停止失败，或者是工具未在运行")
 
     def check_pre(self):
         with out:
@@ -188,6 +190,12 @@ def getUi():
                 print("工具运行成功")
             else:
                 print("工具运行失败,请点击”启动工具“按钮尝试重启")
+
+            res = utils.is_running(gpu_tool_port)
+            if res:
+                print("gpu工具运行成功")
+            else:
+                print("gpu工具运行失败,请点击”启动工具“按钮尝试重启")
 
     def run_all_click(self):
         with out:

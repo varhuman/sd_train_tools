@@ -117,12 +117,13 @@ def delete_models():
         print(f"目标文件夹{models_folder}存在，正在删除...")
         shutil.rmtree(models_folder)
 
-def move_files_and_log(sd, lora_train, model_tools, target):
+def move_files_and_log(sd, lora_train, model_tools, gpu_tool, target):
     try:
         print("开始移动工程。。。")
         move_folder(sd, target, "sd")
         move_folder(lora_train, target, "lora训练")
         move_folder(model_tools, target, "工具")
+        move_folder(gpu_tool, target, "gpu工具")
 
         print("开始复制模型。。。")
         model1_folder = "/root/autodl-tmp/models/sd/"
@@ -198,10 +199,11 @@ def start():
     source1 = "/root/charmAI/stable-diffusion-webui"
     source2 = "/root/charmAI/lora-scripts-for-api"
     source3 = "/root/charmAI/model_tools"
+    source4 = "/root/charmAI/aistron-gpu-tools"
     target = "/root/autodl-tmp"
 
     # call the function
-    move_files_and_log(source1, source2, source3, target)
+    move_files_and_log(source1, source2, source3, source4, target)
 
 
 def is_moving():
