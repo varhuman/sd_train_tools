@@ -168,7 +168,7 @@ def move_files_and_log(sd, lora_train, model_tools, gpu_tool, target):
 
         pytorch_model_folder = "/root/autodl-tmp/models/models--openai--clip-vit-large-patch14/"
         target6 = "/root/.cache/huggingface/hub/models--openai--clip-vit-large-patch14/"
-        copy_model_folder(pytorch_model_folder, target6)
+        copy_all_model_folder(pytorch_model_folder, target6)
 
         pytorch_model_folder = "/root/autodl-tmp/models/models--bert-base-uncased/"
         bert_base = "/root/.cache/huggingface/hub/models--bert-base-uncased/"
